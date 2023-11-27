@@ -15,17 +15,25 @@
           <input type="text" name="password" placeholder="hasło" required>
         </div>
         <input type="submit" value="Zaloguj się"> <?php
-                if ($_SERVER["REQUEST_METHOD"] == "POST") {
-            if($_POST["login"] == "admin" && $_POST["password"] == "test")
-            {
-                echo "<a>Zalogowano</a>";
-            }
-            else 
-            {
-                echo "<a>Błędne dane logowania</a>";
-            }
-            }
-            ?>
+    $conn = new mysqli("127.0.0.1","admin","test","baza");
+
+if ($conn->connect_error) {
+    die("Błąd: " . $conn->connect_error);
+}
+
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    $query = "SELECT * FROM users WHERE username='" . $conn->real_escape_string($_POST["login"]) . "' AND password='" . $conn->real_escape_string($_POST["password"]) . "'";
+    $result = $conn->query($query);
+
+    if ($result->num_rows > 0) {
+        echo "<a>Zalogowano</a>";
+    } 
+    else 
+    {
+        echo "<a>Niepoprawne dane logowania</a>";
+    }
+}
+?>
       </form>
     </div>
     <style>
