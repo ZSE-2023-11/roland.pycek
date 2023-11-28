@@ -9,7 +9,7 @@
       <h1>Logowanie</h1>
       <form method="post">
         <div class="input">
-          <input type="text" name="login" placeholder="login" required>
+          <input type="text" name="username" placeholder="nazwa użytkownika" required>
         </div>
         <div class="input">
           <input type="text" name="password" placeholder="hasło" required>
@@ -22,7 +22,7 @@ if ($conn->connect_error) {
 }
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    $query = "SELECT * FROM users WHERE username='" . $conn->real_escape_string($_POST["login"]) . "' AND password='" . $conn->real_escape_string($_POST["password"]) . "'";
+    $query = "SELECT * FROM users WHERE username='" . $conn->real_escape_string($_POST["username"]) . "' AND password='" . $conn->real_escape_string($_POST["password"]) . "'";
     $result = $conn->query($query);
 
     if ($result->num_rows > 0) {
